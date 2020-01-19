@@ -8,7 +8,7 @@ var upload = multer({dest: 'uploads/'});
 // Set up auth
 var vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient({
-    keyFilename: 'hackdavis2020-265600-fcccb5d30492.json'
+    keyFilename: '../hackdavis2020-265600-fcccb5d30492.json'
 });
 
 var app = express();
@@ -18,7 +18,7 @@ var form = '<!DOCTYPE HTML><html><body>' +
   "<h1>Recycle Buddy</h1>" +
   `<link rel="stylesheet" type="text/css" href="css/style.css" />`+
   "<form method='post' action='/upload' enctype='multipart/form-data'>" +
-  "<input type='file' name='image'/>" +
+  "<div><input type='file' name='image'/></div>" +
   "<input type='submit' /></form>" +
   '</body></html>';
 
@@ -64,12 +64,14 @@ app.post('/upload', upload.single('image'), function(req, res, next) {
             res.write(`<span>Compost</span>`);
           } else if (landfill.length > 0) {
             res.write(`<span>Landfill</span>`);
+          } else {
+            res.write(`<span>Cannot identify category</span>`);
           }
 
           // Delete file (optional)
           fs.unlinkSync(req.file.path);
       
-          res.end('</body></html>');
+          res.end('<br><a href="javascript:history.back()">Go Back</a></body></html>');
   })
   .catch(err => {
       console.error('ERROR:', err);

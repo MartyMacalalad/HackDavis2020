@@ -1,6 +1,17 @@
+@font-face {
+    font-family:"MixModernOutline";
+    src: url("MixModernOutline.ttf") format("truetype");
+}
+
+@font-face {
+    font-family:"MixModernSolid";
+    src: url("MixModernSolid.ttf") format("truetype");
+}
+
 body{
+    background-color: beige;
     display: block;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: 'MixModernSolid';
     font-size: larger;
 }
 
@@ -8,7 +19,7 @@ h1 {
     top: 30%;
     margin-left: 26%;
     position: absolute;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: 'MixModernSolid';
 }
 img {
     top: 42%;
@@ -16,25 +27,19 @@ img {
     width: 30%;
 }
 
-span {
-    top: 42%;
-    margin-left: 70%;
-}
-
 input {
     font-size: 1.25em;
     font-weight: 700;
+    font-family: 'MixModernSolid';
 }
 
 input[type=file] {
     top: 43%;
     margin-left: 26%;
     position: absolute;
-    width: 295px;
-    color: white;
-    background-color: black;
+    color: black;
     display: block;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: 'MixModernSolid';
     font-size: larger;
 }
 
@@ -45,6 +50,17 @@ input[type=submit] {
     color: white;
     background-color: black;
     display: block;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: 'MixModernSolid';
+    font-size: larger;
+}
+
+div {
+    top: 43%;
+    margin-left: 26%;
+    position: absolute;
+    color: white;
+    background-color: black;
+    display: block;
+    font-family: 'MixModernSolid';
     font-size: larger;
 }
