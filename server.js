@@ -31,29 +31,47 @@ app.get('/', function(req, res) {
 // Get the uploaded image
 // Image is uploaded to req.file.path
 app.post('/upload', upload.single('image'), function(req, res, next) {
-    client
+  client
     .labelDetection(req.file.path)
     .then(results => {
-        const labels = results[0].labelAnnotations;
+        var labels = results[0].labelAnnotations;
         res.writeHead(200, {
             'Content-Type': 'text/html'
             });
-            res.write('<!DOCTYPE HTML><html><body><link rel="stylesheet" type="text/css" href="css/style.css" />');
-        
-            // Base64 the image so we can display it on the page
-            res.write('<img width=500 src="' + base64Image(req.file.path) + '"><br>');
-        
-            // Write out the JSON output of the Vision API
-            labels.forEach(label => res.write(`<span>${label.description}: ${label.score}</span><br>`));
-        
-            // Delete file (optional)
-            fs.unlinkSync(req.file.path);
-        
-            res.end('</body></html>');
-    })
-    .catch(err => {
-        console.error('ERROR:', err);
-    });
+          res.write('<!DOCTYPE HTML><html><body><link rel="stylesheet" type="text/css" href="css/style.css" />');
+      
+          // Base64 the image so we can display it on the page
+          res.write('<img width=500 src="' + base64Image(req.file.path) + '"><br>');
+          console.log(labels)
+          const recycleList = [/bottle/i, /can(\s|$)/i];
+          const compostList = [/food/i, /soil/i, /plant/i, /leaves/i, /grass/i];
+          const landfillList = [/foil/i, /wrapper/i, /plastic/i, /lid/i];
+          var recycle = labels.filter(label => recycleList.some(function(x){
+            return x.test(label.description)
+          }));
+          var compost = labels.filter(label => compostList.some(function(x){
+            return x.test(label.description)
+          }));
+          var landfill = labels.filter(label => landfillList.some(function(x){
+            return x.test(label.description)
+          }));
+
+          if (recycle.length > 0) {
+            res.write(`<span>Cans and Bottles</span>`);
+          } else if (compost.length > 0) {
+            res.write(`<span>Compost</span>`);
+          } else if (landfill.length > 0) {
+            res.write(`<span>Landfill</span>`);
+          }
+          
+          // Delete file (optional)
+          fs.unlinkSync(req.file.path);
+      
+          res.end('</body></html>');
+  })
+  .catch(err => {
+      console.error('ERROR:', err);
+  });
 
 
 });
