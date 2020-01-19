@@ -37,11 +37,12 @@ app.post('/upload', upload.single('image'), function(req, res, next) {
         var labels = results[0].labelAnnotations;
         res.writeHead(200, {
             'Content-Type': 'text/html'
-            });
+          });
+
           res.write('<!DOCTYPE HTML><html><body><link rel="stylesheet" type="text/css" href="css/style.css" />');
       
           // Base64 the image so we can display it on the page
-          res.write('<img width=500 src="' + base64Image(req.file.path) + '"><br>');
+          res.write('<img width=500 class="center" src="' + base64Image(req.file.path) + '"><br>');
           console.log(labels)
           const recycleList = [/bottle/i, /can(\s|$)/i];
           const compostList = [/food/i, /soil/i, /plant/i, /leaves/i, /grass/i];
