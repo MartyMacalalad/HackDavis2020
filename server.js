@@ -15,6 +15,7 @@ var app = express();
 
 // Simple upload form
 var form = '<!DOCTYPE HTML><html><body>' +
+  "<h1>Recycle Buddy</h1>" +
   `<link rel="stylesheet" type="text/css" href="css/style.css" />`+
   "<form method='post' action='/upload' enctype='multipart/form-data'>" +
   "<input type='file' name='image'/>" +
@@ -42,7 +43,7 @@ app.post('/upload', upload.single('image'), function(req, res, next) {
           res.write('<!DOCTYPE HTML><html><body><link rel="stylesheet" type="text/css" href="css/style.css" />');
       
           // Base64 the image so we can display it on the page
-          res.write('<img width=500 class="center" src="' + base64Image(req.file.path) + '"><br>');
+          res.write('<img width=200 class="center" src="' + base64Image(req.file.path) + '"><br>');
           console.log(labels)
           const recycleList = [/bottle/i, /can(\s|$)/i];
           const compostList = [/food/i, /soil/i, /plant/i, /leaves/i, /grass/i];
@@ -64,7 +65,7 @@ app.post('/upload', upload.single('image'), function(req, res, next) {
           } else if (landfill.length > 0) {
             res.write(`<span>Landfill</span>`);
           }
-          
+
           // Delete file (optional)
           fs.unlinkSync(req.file.path);
       
