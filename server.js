@@ -41,7 +41,7 @@ app.post('/upload', upload.single('image'), function(req, res, next) {
             res.write('<!DOCTYPE HTML><html><body><link rel="stylesheet" type="text/css" href="css/style.css" />');
         
             // Base64 the image so we can display it on the page
-            res.write('<img width=200 src="' + base64Image(req.file.path) + '"><br>');
+            res.write('<img width=500 src="' + base64Image(req.file.path) + '"><br>');
         
             // Write out the JSON output of the Vision API
             labels.forEach(label => res.write(`<span>${label.description}: ${label.score}</span><br>`));
